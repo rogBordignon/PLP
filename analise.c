@@ -1,0 +1,456 @@
+/*
+	PLP - Analisador Léxico
+	
+	GRUPO
+	
+	Erik Volpert
+	Gustavo Santarsieri
+	Rogerio Bordignon
+	Yuri Serrano
+	
+	
+*/
+
+
+
+/*
+  Por Yuri Serrano
+  
+  Boa Noite Pessoal
+  
+  Sempre que fizerem alterações no código coloquem o seu nome e o que foi feito 
+  para outros membros não acabarem realizando a toa, caso dois façam a mesma coisa no mesmo tempo
+  joguem na mega sena um dos dois irá ganhar eu garanto.
+  
+  
+  Nessa primeira parte eu fiz o sistema de leitura do arquivo, em que eu uso o fgetc que pega cada caracter do arquivo de entrada
+  e armazena em um vetor de chars alocado dinamicamente.
+  Eu havia feito uma versão otimizada, porém depois eu li que seria necessário o uso da etapa anterior então nesta primeira versão
+  estaremos utilizando goto para simular a transição dos estados, basicamente todosos bugs da leitura de arquivo eu já solucionei,falta
+  apenas um que é o de espaços demasiados no arquivo , mas de resto esta tudo ok.
+  Desta parte o arquivo de entrada trás o código sim e retorna o TOKEN TIPO LINHA em que foi pego exemplo:
+  
+  escreva     Palavra Reservada   1
+  
+  
+  Agora só precisamos fazer o cadastro dos autômatos e esta tudo certo.
+  
+  Eu já cadastrei as palavras reservadas:
+  
+  enquanto - OK
+  entao - OK
+  e - OK
+  escreva -OK
+  ou - OK
+  
+  Faltam algumas que são:
+  
+  programa 
+  procedimento
+  
+  var
+  verdadeiro
+  
+  leia
+  
+  inicio
+  inteiro
+  
+  se
+  senao
+  
+  faca
+  funcao
+  fim
+  falso
+  
+  booleano
+  
+  retorne
+  
+  Classe dos identificadores (L  (D|L|_) )
+  
+  Classe dos Operadores Relacionais ( < >  <> <= >= )
+  
+  Classedos delimitadores (. , ; )
+  
+  Como exemplo basta analisar o código que eu já produzi que conseguiram realizar sem problema.
+  
+  Tiramos 10 na primeira etapa, mas a dani fez observações co os identificadores < > então eu já fiz a correção do autômato e o correto estará
+  aqui no github.
+  
+  
+  Bom trabalho a todos.
+  
+  
+  Não esqueçam de comentar no código o que foi produzido
+  
+Para testar o que foi feito é preciso ter um arquivo chamado entrada.txt , o de saída é gerado automaticamente.  
+
+
+ATTE Yuri Serrano
+
+
+OBS:
+
+Links interessantes:
+
+http://web.cs.mun.ca/~michael/c/ascii-table.html
+http://www.tutorialspoint.com/c_standard_library/ctype_h.htm
+http://linguagemc.com.br/ctype-h-toupper-tolower-isalpha-isdigit-em-c/
+
+*/
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <conio.h>
+#include <string.h>
+
+
+int main()
+{
+	
+	char *entrada;
+	char resposta[100]  ={};
+	FILE *abrir;
+	FILE *saida;
+	int i=0,contador,linha=1,j=0;
+	char caracter,c;
+	abrir = fopen("entrada.txt","r");
+	saida = fopen("saida.txt","w");
+	
+	if(abrir == NULL)
+			printf("Erro, nao foi possivel abrir o arquivo\n");
+			
+	if(saida == NULL)
+			printf("Erro, nao foi possivel abrir o arquivo\n");		
+	
+	
+	
+	fprintf(saida,"TOKEN\t\t\t\t\tTIPO\t\t\t\t\t\tLINHA\n");
+	entrada = malloc(sizeof(char)*2000);
+	
+	// Lê todos os caractres do arquivo para o vvetor entrada[].
+	while((caracter=fgetc(abrir))!=EOF) 
+	{
+		entrada[i]=caracter;
+		i++;
+	}
+	
+	printf(" [0]:%d\n [1]:%d\n [2]:%d\n [3]:%d\n [4]:%d\n [5]:%d\n [6]:%d\n [7]:%d\n [8]:%d\n",entrada[0],entrada[1],entrada[2],entrada[3],entrada[4],entrada[5],entrada[6],entrada[7],entrada[8]);
+	
+	entrada[i]='\0';
+
+	while(j<strlen(entrada))
+	{	
+	
+	
+		
+		inicio:
+		memset(&resposta[0], 0, sizeof(resposta));
+		c=entrada[j];
+		identificador:
+		
+		/*
+		 *  
+		*/
+		if(isalpha(c) && c == 'e' && c == 101) 
+		{
+			
+			if(isspace(entrada[j+1]) || entrada[j+1] ==  32 || entrada[j+1] == 10 || entrada[j+1] == '\0')
+			{
+				strcat(resposta,"e");
+				
+				//printf("%s",resposta);			
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+1] == 10)
+					linha=linha+1;
+				j=j+2;
+				goto inicio;			
+								
+			}
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 's' && entrada[j+1] == 115)
+			{
+				strcat(resposta,"e");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"s");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"s");
+				j=j+1;
+				goto escreva;
+				
+			}
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				strcat(resposta,"e");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				if(entrada[j+1] == 'q')
+					goto enq;
+				if(entrada[j+1] == 't')
+					goto prox;
+				
+				
+			}
+			prox:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 't' && entrada[j+1] == 116)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"t");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"t");
+				j=j+1;
+				goto entao;
+			}
+			enq:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'q' && entrada[j+1] == 113)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"q");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"q");
+				j=j+1;
+				goto enquanto;
+			}
+			entao:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto entao1;
+			}
+			entao1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+				
+			}
+			enquanto:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'u' && entrada[j+1] == 117)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"u");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"u");
+				j=j+1;
+				goto enquanto1;
+			}	
+			enquanto1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto enquanto2;
+			}
+			enquanto2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				goto enquanto3;
+			}
+			enquanto3:
+				printf("%c - %d\n",entrada[j+1],entrada[j+1]);
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 't' && entrada[j+1] == 116)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"t");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"t");
+				j=j+1;
+				goto enquanto4;
+			}
+			enquanto4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+				
+			}
+			escreva:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'c' && entrada[j+1] == 99)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"c");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"c");
+				j=j+1;
+				goto escreva1;
+				
+			}
+			escreva1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto escreva2;
+				
+			}
+			escreva2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto escreva3;
+				
+			}
+			escreva3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'v' && entrada[j+1] == 118)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"v");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"v");
+				j=j+1;
+				goto escreva4;
+				
+			}
+			escreva4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					strcat(resposta,"a");
+					j = j+2;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+				
+			}
+				
+			
+		}
+		if(isalpha(c) && c == 'o' && c == 111) 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'u' && entrada[j+1] == 117)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				strcat(resposta,"u");
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+				
+			}
+		}
+			
+		if(entrada[j+1] == '\0')
+			break;
+			
+}
+//	printf("entrada[%d]:%d\n entrada[%d]:%d\n  entrada[%d]:%d\n  entrada[%d]:%d\n entrada[%d]:%d\n",0,entrada[0],1,entrada[1],2,entrada[2],3,entrada[3],4,entrada[4]);
+	
+	fclose(abrir);
+	fclose(saida);
+	free(entrada);
+	
+	system("PAUSE");
+	return 0;
+}
