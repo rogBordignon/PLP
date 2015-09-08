@@ -2,3 +2,5 @@ se
 senao
 entao
 programa procedimento
+inteiro
+inicio

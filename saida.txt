@@ -4,3 +4,5 @@ senao					Palavra Reservada				2
 entao					Palavra Reservada				3
 programa				Palavra Reservada				4
 procedimento				Palavra Reservada				4
+inteiro					Palavra Reservada				5
+inicio					Palavra Reservada				6

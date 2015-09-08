@@ -49,16 +49,16 @@
   senao - OK
   programa - OK
   procedimento - OK
+  inicio - OK
+  inteiro - OK 
+  
+  
   Faltam algumas e tambem algumas classes de identificacao que sao:
   
   
   
   var
   verdadeiro
-  
-  
-  inicio
-  inteiro  
   
   
   faca
@@ -1005,8 +1005,160 @@ int main()
 			}		
 			
 		}
+		if(isalpha(c) && c == 'i' && c == 105)		 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				strcat(resposta,"i");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				if(entrada[j+1] == 'i')
+					goto ini;
+				if(entrada[j+1] == 't')
+					goto inteiro;
+								
+								
+			}
+			
+			ini:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto ini1;
+			}
+			ini1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'c' && entrada[j+1] == 99)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"c");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"c");
+				j=j+1;
+				goto ini2;
+			}
+			ini2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto ini3;
+			}
+			ini3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
+			inteiro:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 't' && entrada[j+1] == 116)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"t");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"t");
+				j=j+1;
+				goto inteiro1;
+			}
+			inteiro1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto inteiro2;
+			}
+			inteiro2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto inteiro3;
+			}
+			inteiro3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto inteiro4;
+			}
+			inteiro4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
 		
-		
+	}
 		if(entrada[j+1] == '\0')
 			break;
 			
@@ -1020,4 +1172,3 @@ int main()
 	system("PAUSE");
 	return 0;
 }
-
