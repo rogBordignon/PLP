@@ -47,11 +47,11 @@
   leia - OK
   se - OK
   senao - OK
-  
+  programa - OK
+  procedimento - OK
   Faltam algumas e tambem algumas classes de identificacao que sao:
   
-  programa 
-  procedimento
+  
   
   var
   verdadeiro
@@ -774,6 +774,238 @@ int main()
 							
 			
 		}
+		if(isalpha(c) && c == 'p' && c == 112)		 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+			{
+				strcat(resposta,"p");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+								
+			}
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"o");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				j=j+1;
+				if(entrada[j+1] == 'g')
+					goto programa;
+				if(entrada[j+1] == 'c')
+					goto procedimento;
+								
+			}
+			
+			programa:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'g' && entrada[j+1] == 103)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"g");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"g");
+				j=j+1;
+				goto programa1;
+			}
+			programa1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto programa2;
+			}
+			programa2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto programa3;
+			}
+			programa3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'm' && entrada[j+1] == 109)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"m");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"m");
+				j=j+1;
+				goto programa4;
+			}
+			programa4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				strcat(resposta,"a");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
+			procedimento:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'c' && entrada[j+1] == 99)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"c");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"c");
+				j=j+1;
+				goto procedimento1;
+			}
+			procedimento1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto procedimento2;
+			}
+			procedimento2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'd' && entrada[j+1] == 100)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"d");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"d");
+				j=j+1;
+				goto procedimento3;
+			}
+			procedimento3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto procedimento4;
+			}
+			procedimento4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'm' && entrada[j+1] == 109)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"m");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"m");
+				j=j+1;
+				goto procedimento5;
+			}
+			procedimento5:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto procedimento6;
+			}
+			procedimento6:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				goto procedimento7;
+			}
+			procedimento7:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 't' && entrada[j+1] == 116)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"t");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"t");
+				j=j+1;
+				goto procedimento8;
+			}
+			procedimento8:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}		
+			
+		}
+		
 		
 		if(entrada[j+1] == '\0')
 			break;
