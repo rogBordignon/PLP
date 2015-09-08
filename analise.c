@@ -18,32 +18,35 @@
   
   Boa Noite Pessoal
   
-  Sempre que fizerem alterações no código coloquem o seu nome e o que foi feito 
-  para outros membros não acabarem realizando a toa, caso dois façam a mesma coisa no mesmo tempo
-  joguem na mega sena um dos dois irá ganhar eu garanto.
+  Sempre que fizerem alteracoes no codigo coloquem o seu nome e o que foi feito 
+  para outros membros nao acabarem realizando a toa, caso dois facam a mesma coisa no mesmo tempo
+  joguem na mega sena um dos dois ira ganhar eu garanto.
   
   
   Nessa primeira parte eu fiz o sistema de leitura do arquivo, em que eu uso o fgetc que pega cada caracter do arquivo de entrada
   e armazena em um vetor de chars alocado dinamicamente.
-  Eu havia feito uma versão otimizada, porém depois eu li que seria necessário o uso da etapa anterior então nesta primeira versão
-  estaremos utilizando goto para simular a transição dos estados, basicamente todosos bugs da leitura de arquivo eu já solucionei,falta
-  apenas um que é o de espaços demasiados no arquivo , mas de resto esta tudo ok.
-  Desta parte o arquivo de entrada trás o código sim e retorna o TOKEN TIPO LINHA em que foi pego exemplo:
+  Eu havia feito uma versao otimizada, porem depois eu li que seria necessario o uso da etapa anterior entao nesta primeira versao
+  estaremos utilizando goto para simular a transicao dos estados, basicamente todosos bugs da leitura de arquivo eu ja� solucionei,falta
+  apenas um que eh o de espacos demasiados no arquivo , mas de resto esta tudo ok.
+  Desta parte o arquivo de entrada tras o codigo sim e retorna o TOKEN TIPO LINHA em que foi pego exemplo:
   
   escreva     Palavra Reservada   1
   
   
-  Agora só precisamos fazer o cadastro dos autômatos e esta tudo certo.
+  Agora so precisamos fazer o cadastro dos autamatos e esta tudo certo.
   
-  Eu já cadastrei as palavras reservadas:
+  Eu ja cadastrei as palavras reservadas:
   
   enquanto - OK
   entao - OK
   e - OK
   escreva -OK
   ou - OK
+  booleano - OK
+  retorne - OK
+  leia - OK
   
-  Faltam algumas que são:
+  Faltam algumas e tambem algumas classes de identificacao que sao:
   
   programa 
   procedimento
@@ -51,7 +54,6 @@
   var
   verdadeiro
   
-  leia
   
   inicio
   inteiro
@@ -64,9 +66,7 @@
   fim
   falso
   
-  booleano
   
-  retorne
   
   Classe dos identificadores (L  (D|L|_) )
   
@@ -74,18 +74,18 @@
   
   Classedos delimitadores (. , ; )
   
-  Como exemplo basta analisar o código que eu já produzi que conseguiram realizar sem problema.
+  Como exemplo basta analisar o codigo que eu ja produzi que conseguiram realizar sem problema.
   
-  Tiramos 10 na primeira etapa, mas a dani fez observações co os identificadores < > então eu já fiz a correção do autômato e o correto estará
+  Tiramos 10 na primeira etapa, mas a dani fez observacoes co os identificadores < > entao eu ja fiz a correcao do automato e o correto estara
   aqui no github.
   
   
   Bom trabalho a todos.
   
   
-  Não esqueçam de comentar no código o que foi produzido
+  Nao esquecam de comentar no codigo o que foi produzido
   
-Para testar o que foi feito é preciso ter um arquivo chamado entrada.txt , o de saída é gerado automaticamente.  
+Para testar o que foi feito eh preciso ter um arquivo chamado entrada.txt , o de saida eh gerado automaticamente.  
 
 
 ATTE Yuri Serrano
@@ -134,7 +134,7 @@ int main()
 	fprintf(saida,"TOKEN\t\t\t\t\tTIPO\t\t\t\t\t\tLINHA\n");
 	entrada = malloc(sizeof(char)*2000);
 	
-	// Lê todos os caractres do arquivo para o vvetor entrada[].
+	// L� todos os caractres do arquivo para o vvetor entrada[].
 	while((caracter=fgetc(abrir))!=EOF) 
 	{
 		entrada[i]=caracter;
@@ -428,7 +428,7 @@ int main()
 					goto identificador;
 				}
 				strcat(resposta,"u");
-				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
 				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
 				{
 					if(entrada[j+2] == 10)
@@ -440,7 +440,265 @@ int main()
 				
 			}
 		}
+	
+		if(isalpha(c) && c == 'l' && c == 108) 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				strcat(resposta,"l");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto leia;
+							
+			}
+			leia:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto leia1;
+				
+			}
+			leia1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				strcat(resposta,"a");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
 			
+			
+		}
+		if(isalpha(c) && c == 'b' && c == 98) 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"b");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"o");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				j=j+1;
+				goto booleano;
+							
+			}
+			booleano:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"o");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				j=j+1;
+				goto booleano1;
+				
+			}
+			booleano1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'l' && entrada[j+1] == 108)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"l");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"l");
+				j=j+1;
+				goto booleano2;
+			}
+			booleano2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto booleano3;
+			}
+			booleano3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto booleano4;
+			}
+			booleano4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				goto booleano5;
+			}
+			booleano5:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}		
+			
+		}
+		
+		if(isalpha(c) && c == 'r' && c == 114) 
+		{
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				strcat(resposta,"r");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto retorne;
+							
+			}
+			retorne:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 't' && entrada[j+1] == 116)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"t");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"t");
+				j=j+1;
+				goto retorne1;
+				
+			}
+			retorne1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"o");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"o");
+				j=j+1;
+				goto retorne2;
+				
+			}
+			retorne2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto retorne3;
+				
+			}
+			retorne3:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				goto retorne4;
+				
+			}
+			retorne4:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				strcat(resposta,"e");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
+		}
+		
 		if(entrada[j+1] == '\0')
 			break;
 			
