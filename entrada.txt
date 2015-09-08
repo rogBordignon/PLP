@@ -8,3 +8,5 @@ fim
 faca
 funcao
 falso
+var
+verdadeiro

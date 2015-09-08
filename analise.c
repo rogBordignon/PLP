@@ -1370,6 +1370,169 @@ int main()
 		}
 		
 	}
+	if(isalpha(c) && c == 'v' && c == 118)		 
+	{
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+		{
+				strcat(resposta,"v");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				if(entrada[j+1] == 'r')
+					goto var;
+			
+		}
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+		{
+				strcat(resposta,"v");
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto verdadeiro;
+		}
+		verdadeiro:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto verdadeiro1;
+		}
+		verdadeiro1:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'd' && entrada[j+1] == 100)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"d");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"d");
+				j=j+1;
+				goto verdadeiro2;
+		}
+		verdadeiro2:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto verdadeiro3;
+		}
+		verdadeiro3:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'd' && entrada[j+1] == 100)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"d");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"d");
+				j=j+1;
+				goto verdadeiro4;
+		}
+		verdadeiro4:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"e");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"e");
+				j=j+1;
+				goto verdadeiro5;
+		}
+		verdadeiro5:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'i' && entrada[j+1] == 105)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"i");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"i");
+				j=j+1;
+				goto verdadeiro6;
+		}
+		verdadeiro6:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+		{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"r");
+				j=j+1;
+				goto verdadeiro7;
+		}
+		verdadeiro7:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+		{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+		}
+		var:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+		{
+				strcat(resposta,"r");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+		}
+				
+	}
 		if(entrada[j+1] == '\0')
 			break;
 			
