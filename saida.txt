@@ -6,3 +6,7 @@ programa				Palavra Reservada				4
 procedimento				Palavra Reservada				4
 inteiro					Palavra Reservada				5
 inicio					Palavra Reservada				6
+fim					Palavra Reservada				7
+faca					Palavra Reservada				8
+funcao					Palavra Reservada				9
+falso					Palavra Reservada				10

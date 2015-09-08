@@ -4,3 +4,7 @@ entao
 programa procedimento
 inteiro
 inicio
+fim
+faca
+funcao
+falso
