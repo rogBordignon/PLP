@@ -1,0 +1,4 @@
+TOKEN					TIPO						LINHA
+se					Palavra Reservada				1
+senao					Palavra Reservada				2
+entao					Palavra Reservada				3

@@ -45,6 +45,8 @@
   booleano - OK
   retorne - OK
   leia - OK
+  se - OK
+  senao - OK
   
   Faltam algumas e tambem algumas classes de identificacao que sao:
   
@@ -56,10 +58,8 @@
   
   
   inicio
-  inteiro
+  inteiro  
   
-  se
-  senao
   
   faca
   funcao
@@ -253,7 +253,7 @@ int main()
 					goto identificador;
 				}
 				strcat(resposta,"o");
-				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
 				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
 				{
 					if(entrada[j+2] == 10)
@@ -697,6 +697,82 @@ int main()
 					
 				}
 			}
+		}
+		if(isalpha(c) && c == 's' && c == 115)		 
+		{
+			strcat(resposta,"s");
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'e' && entrada[j+1] == 101)
+			{
+				strcat(resposta,"e");
+				if(entrada[j+2] == 'n')
+				{
+					j=j+1;
+					goto senao;
+				}
+				if(isalpha(entrada[j+2])  || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+				
+			}
+			senao:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'n' && entrada[j+1] == 110)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"n");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"n");
+				j=j+1;
+				goto senao1;
+			}
+			senao1:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'a' && entrada[j+1] == 97)
+			{
+				if(entrada[j+2] == 32 || entrada[j+2] == 10 || entrada[j+2] == '\0')
+				{
+					strcat(resposta,"a");
+					j = j+3;
+					goto identificador;
+				}
+				strcat(resposta,"a");
+				j=j+1;
+				goto senao2;
+			}
+			senao2:
+			if(isalpha(entrada[j+1]) && entrada[j+1] == 'o' && entrada[j+1] == 111)
+			{
+				strcat(resposta,"o");
+				if(isalpha(entrada[j+2]) || isdigit(entrada[j+2]) )
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
+			}
+							
+			
 		}
 		
 		if(entrada[j+1] == '\0')
