@@ -1,12 +1,2 @@
-se
-senao
-entao
-programa procedimento
-inteiro
-inicio
-fim
-faca
-funcao
-falso
-var
-verdadeiro
+se        se           senao
+ou

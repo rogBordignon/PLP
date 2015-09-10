@@ -51,21 +51,19 @@
   procedimento - OK
   inicio - OK
   inteiro - OK 
+  var - OK
+  verdadeiro - OK
+  faca - OK
+  funcao - OK
+  fim - OK
+  falso - OK
   
   
   Faltam algumas e tambem algumas classes de identificacao que sao:
   
   
   
-  var
-  verdadeiro
-  
-  
-  faca
-  funcao
-  fim
-  falso
-  
+
   
   
   Classe dos identificadores (L  (D|L|_) )
@@ -107,7 +105,6 @@ http://linguagemc.com.br/ctype-h-toupper-tolower-isalpha-isdigit-em-c/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <conio.h>
 #include <string.h>
 
 
@@ -118,7 +115,7 @@ int main()
 	char resposta[100]  ={};
 	FILE *abrir;
 	FILE *saida;
-	int i=0,contador,linha=1,j=0;
+	int i=0,contador,linha=1,j=0,k=0;
 	char caracter,c;
 	abrir = fopen("entrada.txt","r");
 	saida = fopen("saida.txt","w");
@@ -140,9 +137,12 @@ int main()
 		entrada[i]=caracter;
 		i++;
 	}
+	while(k<11)
+	{
 	
-	printf(" [0]:%d\n [1]:%d\n [2]:%d\n [3]:%d\n [4]:%d\n [5]:%d\n [6]:%d\n [7]:%d\n [8]:%d\n",entrada[0],entrada[1],entrada[2],entrada[3],entrada[4],entrada[5],entrada[6],entrada[7],entrada[8]);
-	
+		printf(" [%d]:%d\n ",k,entrada[k]);
+		k=k+1;
+	}
 	entrada[i]='\0';
 
 	while(j<strlen(entrada))
@@ -153,6 +153,38 @@ int main()
 		inicio:
 		memset(&resposta[0], 0, sizeof(resposta));
 		c=entrada[j];
+		if(c == 32)
+		{
+			while(entrada[j] == 32 && entrada[j+1] == 32)
+			{
+					
+					j=j+1;
+					c=entrada[j];
+					if(entrada[j+2] == 10)
+					{
+					
+						linha = linha+1;
+						j=j+3;
+						
+						
+					}
+			}
+		}
+		if(entrada[j] == 32)
+		{
+			j=j+1;
+			c=entrada[j];
+		}
+		if(entrada[j] == 10)
+		{
+			j=j+1;
+			linha=linha+1;
+			c=entrada[j];
+		}
+		if(entrada[j] ==0)
+			break;
+		
+		
 		identificador:
 		
 		/*
