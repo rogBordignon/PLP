@@ -1,5 +1,5 @@
 /*
-	PLP - Analisador Léxico
+	PLP - Analisador LÃ©xico
 	
 	GRUPO
 	
@@ -26,7 +26,7 @@
   Nessa primeira parte eu fiz o sistema de leitura do arquivo, em que eu uso o fgetc que pega cada caracter do arquivo de entrada
   e armazena em um vetor de chars alocado dinamicamente.
   Eu havia feito uma versao otimizada, porem depois eu li que seria necessario o uso da etapa anterior entao nesta primeira versao
-  estaremos utilizando goto para simular a transicao dos estados, basicamente todosos bugs da leitura de arquivo eu ja� solucionei,falta
+  estaremos utilizando goto para simular a transicao dos estados, basicamente todosos bugs da leitura de arquivo eu ja¡ solucionei,falta
   apenas um que eh o de espacos demasiados no arquivo , mas de resto esta tudo ok.
   Desta parte o arquivo de entrada tras o codigo sim e retorna o TOKEN TIPO LINHA em que foi pego exemplo:
   
@@ -134,7 +134,7 @@ int main()
 	fprintf(saida,"TOKEN\t\t\t\t\tTIPO\t\t\t\t\t\tLINHA\n");
 	entrada = malloc(sizeof(char)*2000);
 	
-	// L� todos os caractres do arquivo para o vvetor entrada[].
+	// Lê todos os caractres do arquivo para o vetor entrada[].
 	while((caracter=fgetc(abrir))!=EOF) 
 	{
 		entrada[i]=caracter;
@@ -1486,6 +1486,7 @@ int main()
 					strcat(resposta,"r");
 					j = j+3;
 					goto identificador;
+					
 				}
 				strcat(resposta,"r");
 				j=j+1;
@@ -1531,7 +1532,61 @@ int main()
 					
 				}
 		}
+		identificador:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+		{
+			
+		}
+		
+		comentario:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == '{' && entrada[j+1] == 123)
+		{
+				if(entrada[j+2] == '}' && entrada[j+2] == 125)
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto comentario2;
+					
+				}
+				else
+				{
+					goto comentario1;
+					
+				}
+		}
+		comentario1:
+		
+				if(entrada[j+1] == '}' && entrada[j+1] == 125)
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto comentario2;
+					
+				}
+				else
+				{
+					goto comentario1;
+					
+				}
 				
+		comentario2:
+		if(isalpha(entrada[j+1]) && entrada[j+1] == '}' && entrada[j+1] == 125)
+		{
+				if(entrada[j+2] == '}' && entrada[j+2] == 125)
+				{
+					strcat(resposta,"r");
+					j = j+3;
+					goto comentario2;
+					
+				}
+				else
+				{
+					goto identificador; //???
+					
+				}
+				
+		}
+		
 	}
 		if(entrada[j+1] == '\0')
 			break;
