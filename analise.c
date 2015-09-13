@@ -112,14 +112,16 @@ int main()
 {
 	
 	char *entrada;
+	char num;
 	char resposta[100]  ={};
+	char numero[100] = {};
 	FILE *abrir;
 	FILE *saida;
 	int i=0,contador,linha=1,j=0,k=0;
 	char caracter,c;
 	abrir = fopen("entrada.txt","r");
 	saida = fopen("saida.txt","w");
-	
+	int flag =0;
 	if(abrir == NULL)
 			printf("Erro, nao foi possivel abrir o arquivo\n");
 			
@@ -131,18 +133,22 @@ int main()
 	fprintf(saida,"TOKEN\t\t\t\t\tTIPO\t\t\t\t\t\tLINHA\n");
 	entrada = malloc(sizeof(char)*2000);
 	
-	// LÃª todos os caractres do arquivo para o vetor entrada[].
+	// Lê todos os caractres do arquivo para o vvetor entrada[].
 	while((caracter=fgetc(abrir))!=EOF) 
 	{
 		entrada[i]=caracter;
 		i++;
 	}
-	while(k<11)
-	{
 	
+	printf("Tamanho Entrada:%d\n",strlen(entrada));
+	/*
+	while(k<strlen(entrada))
+	{
+		printf("K:%d\n",k);
 		printf(" [%d]:%d\n ",k,entrada[k]);
 		k=k+1;
 	}
+	*/
 	entrada[i]='\0';
 
 	while(j<strlen(entrada))
@@ -190,6 +196,89 @@ int main()
 		/*
 		 *  
 		*/
+		
+		
+		if(c == '{' && c == 123)
+		{
+			comentario:
+			if(entrada[j+1] !=  '}')
+			{
+				j=j+1;
+				goto comentario;
+			}
+			
+			if(entrada[j+1] == '}' && entrada[j+2] == 10)
+			{
+				linha=linha+1;
+				j=j+3;
+				goto inicio;
+			}
+			if(entrada[j+1] == '}' && entrada[j+2] == 32)
+			{
+				
+				j=j+3;
+				goto inicio;
+			}
+			if(entrada[j+1] == '}' && entrada[j+2] == 0)
+			{
+				j=j+3;
+				printf("Comentario");
+				break;
+			}
+			if(entrada[j+1] == '}' && isdigit(entrada[j+2] ) || isalpha(entrada[j+2]) || entrada[j+2] == '_' )
+			{
+				j=j+2;
+				goto inicio;
+				
+			}
+		}
+		
+		
+		if(isdigit(c))
+		{
+			
+			sprintf(numero, "%c", c);
+			strcat(resposta,numero);
+			
+			numero:
+			memset(&numero[0], 0, sizeof(numero));
+			num = entrada[j+1];
+			if(isdigit(num))
+			{
+				sprintf(numero, "%c", num);
+				strcat(resposta,numero);
+				j=j+1;
+				goto numero;
+				
+			}
+			printf("NUM:%d\n",num);
+			if(isalpha(num) || num == '_')
+			{
+				goto errolexico;
+				flag=1;
+			}
+			if(num == 0  )
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				break;
+				
+			}
+			if(num == 10)
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				linha=linha+1;
+				j=j+2;
+				goto inicio;
+			}
+			if(num == 32)
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				j=j+2;
+				goto inicio;
+				
+			}		
+		}
+		
 		if(isalpha(c) && c == 'e' && c == 101) 
 		{
 			
@@ -198,7 +287,7 @@ int main()
 				strcat(resposta,"e");
 				
 				//printf("%s",resposta);			
-				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+				fprintf(saida,"%s\t\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
 				if(entrada[j+1] == 10)
 					linha=linha+1;
 				j=j+2;
@@ -1518,7 +1607,6 @@ int main()
 					strcat(resposta,"r");
 					j = j+3;
 					goto identificador;
-					
 				}
 				strcat(resposta,"r");
 				j=j+1;
@@ -1564,67 +1652,32 @@ int main()
 					
 				}
 		}
-		identificador:
-		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
-		{
-			
-		}
-		
-		comentario:
-		if(isalpha(entrada[j+1]) && entrada[j+1] == '{' && entrada[j+1] == 123)
-		{
-				if(entrada[j+2] == '}' && entrada[j+2] == 125)
-				{
-					strcat(resposta,"r");
-					j = j+3;
-					goto comentario2;
-					
-				}
-				else
-				{
-					goto comentario1;
-					
-				}
-		}
-		comentario1:
-		
-				if(entrada[j+1] == '}' && entrada[j+1] == 125)
-				{
-					strcat(resposta,"r");
-					j = j+3;
-					goto comentario2;
-					
-				}
-				else
-				{
-					goto comentario1;
-					
-				}
 				
-		comentario2:
-		if(isalpha(entrada[j+1]) && entrada[j+1] == '}' && entrada[j+1] == 125)
-		{
-				if(entrada[j+2] == '}' && entrada[j+2] == 125)
-				{
-					strcat(resposta,"r");
-					j = j+3;
-					goto comentario2;
-					
-				}
-				else
-				{
-					goto identificador; //???
-					
-				}
-				
-		}
-		
 	}
+	
+		
+		
 		if(entrada[j+1] == '\0')
+		{
+		
 			break;
+		}
 			
+			
+			
+		
 }
+
+
+
 //	printf("entrada[%d]:%d\n entrada[%d]:%d\n  entrada[%d]:%d\n  entrada[%d]:%d\n entrada[%d]:%d\n",0,entrada[0],1,entrada[1],2,entrada[2],3,entrada[3],4,entrada[4]);
+	
+	if(flag==1)
+	{
+	
+		errolexico:
+				printf("ERRO LEXICO - LINHA %d\n",linha);
+	}
 	
 	fclose(abrir);
 	fclose(saida);

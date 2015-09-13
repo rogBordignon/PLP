@@ -1,5 +1,6 @@
 TOKEN					TIPO						LINHA
+e					Palavra Reservada				1
+123					Numero 						1
 se					Palavra Reservada				1
-se					Palavra Reservada				1
-senao					Palavra Reservada				1
-ou					Palavra Reservada				2
+senao					Palavra Reservada				2
+123456					Numero 						3
