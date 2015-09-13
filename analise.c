@@ -51,19 +51,21 @@
   procedimento - OK
   inicio - OK
   inteiro - OK 
-  var - OK
-  verdadeiro - OK
-  faca - OK
-  funcao - OK
-  fim - OK
-  falso - OK
   
   
   Faltam algumas e tambem algumas classes de identificacao que sao:
   
   
   
-
+  var
+  verdadeiro
+  
+  
+  faca
+  funcao
+  fim
+  falso
+  
   
   
   Classe dos identificadores (L  (D|L|_) )
@@ -105,6 +107,7 @@ http://linguagemc.com.br/ctype-h-toupper-tolower-isalpha-isdigit-em-c/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <conio.h>
 #include <string.h>
 
 
@@ -115,7 +118,7 @@ int main()
 	char resposta[100]  ={};
 	FILE *abrir;
 	FILE *saida;
-	int i=0,contador,linha=1,j=0,k=0;
+	int i=0,contador,linha=1,j=0;
 	char caracter,c;
 	abrir = fopen("entrada.txt","r");
 	saida = fopen("saida.txt","w");
@@ -137,12 +140,9 @@ int main()
 		entrada[i]=caracter;
 		i++;
 	}
-	while(k<11)
-	{
 	
-		printf(" [%d]:%d\n ",k,entrada[k]);
-		k=k+1;
-	}
+	printf(" [0]:%d\n [1]:%d\n [2]:%d\n [3]:%d\n [4]:%d\n [5]:%d\n [6]:%d\n [7]:%d\n [8]:%d\n",entrada[0],entrada[1],entrada[2],entrada[3],entrada[4],entrada[5],entrada[6],entrada[7],entrada[8]);
+	
 	entrada[i]='\0';
 
 	while(j<strlen(entrada))
@@ -153,38 +153,6 @@ int main()
 		inicio:
 		memset(&resposta[0], 0, sizeof(resposta));
 		c=entrada[j];
-		if(c == 32)
-		{
-			while(entrada[j] == 32 && entrada[j+1] == 32)
-			{
-					
-					j=j+1;
-					c=entrada[j];
-					if(entrada[j+2] == 10)
-					{
-					
-						linha = linha+1;
-						j=j+3;
-						
-						
-					}
-			}
-		}
-		if(entrada[j] == 32)
-		{
-			j=j+1;
-			c=entrada[j];
-		}
-		if(entrada[j] == 10)
-		{
-			j=j+1;
-			linha=linha+1;
-			c=entrada[j];
-		}
-		if(entrada[j] ==0)
-			break;
-		
-		
 		identificador:
 		
 		/*
@@ -1565,9 +1533,22 @@ int main()
 				}
 		}
 		identificador:
-		if(isalpha(entrada[j+1]) && entrada[j+1] == 'r' && entrada[j+1] == 114)
+		if(isalpha(entrada[j+1]) /**/ && ((entrada[j+1] >= 65 && entrada[j+1] <= 90) || (entrada[j+1] >= 97 && entrada[j+1] <= 122)) /*&& entrada[j+1] == 'r'*/
 		{
-			
+				if((isalpha(entrada[j+2]) /**/ && ((entrada[j+2] >= 65 && entrada[j+2] <= 90) || (entrada[j+2] >= 97 && entrada[j+2] <= 122))) || (isdigit(entrada[j+2]) /**/ && (entrada[j+2] >= 48 && entrada[j+2] <= 57)) || (entrada[j+2] == 95))
+				{
+					j = j+2;
+					goto identificador;
+				}
+				
+				if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
+				{
+					if(entrada[j+2] == 10)
+						linha=linha+1;
+					j = j+3;
+					goto inicio;
+					
+				}
 		}
 		
 		comentario:
@@ -1613,7 +1594,7 @@ int main()
 				}
 				else
 				{
-					goto identificador; //???
+					goto inicio;
 					
 				}
 				
