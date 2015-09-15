@@ -1,6 +1,7 @@
 /*
 	PLP - Analisador Léxico
 
+
 	GRUPO
 
 	Erik Volpert
@@ -26,7 +27,7 @@
   Nessa primeira parte eu fiz o sistema de leitura do arquivo, em que eu uso o fgetc que pega cada caracter do arquivo de entrada
   e armazena em um vetor de chars alocado dinamicamente.
   Eu havia feito uma versao otimizada, porem depois eu li que seria necessario o uso da etapa anterior entao nesta primeira versao
-  estaremos utilizando goto para simular a transicao dos estados, basicamente todosos bugs da leitura de arquivo eu ja� solucionei,falta
+  estaremos utilizando goto para simular a transicao dos estados, basicamente todosos bugs da leitura de arquivo eu ja¡ solucionei,falta
   apenas um que eh o de espacos demasiados no arquivo , mas de resto esta tudo ok.
   Desta parte o arquivo de entrada tras o codigo sim e retorna o TOKEN TIPO LINHA em que foi pego exemplo:
 
@@ -55,18 +56,16 @@
 
   Faltam algumas e tambem algumas classes de identificacao que sao:
 
+  inteiro - OK
+  var - OK
+  verdadeiro - OK
+  faca - OK
+  funcao - OK
+  fim - OK
+  falso - OK
 
 
-  var
-  verdadeiro
-
-
-  faca
-  funcao
-  fim
-  falso
-
-
+  Faltam algumas e tambem algumas classes de identificacao que sao:
 
   Classe dos identificadores (L  (D|L|_) )
 
@@ -107,7 +106,6 @@ http://linguagemc.com.br/ctype-h-toupper-tolower-isalpha-isdigit-em-c/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <conio.h>
 #include <string.h>
 
 
@@ -115,14 +113,17 @@ int main()
 {
 
 	char *entrada;
+	char num;
 	char resposta[100]  ={};
+	char numero[100] = {};
 	FILE *abrir;
 	FILE *saida;
-	int i=0,contador,linha=1,j=0;
+	int i=0,contador,linha=1,j=0,k=0;
 	char caracter,c;
 	abrir = fopen("entrada.txt","r");
 	saida = fopen("saida.txt","w");
 
+	int flag =0;
 	if(abrir == NULL)
 			printf("Erro, nao foi possivel abrir o arquivo\n");
 
@@ -141,8 +142,16 @@ int main()
 		i++;
 	}
 
-	printf(" [0]:%d\n [1]:%d\n [2]:%d\n [3]:%d\n [4]:%d\n [5]:%d\n [6]:%d\n [7]:%d\n [8]:%d\n",entrada[0],entrada[1],entrada[2],entrada[3],entrada[4],entrada[5],entrada[6],entrada[7],entrada[8]);
 
+	printf("Tamanho Entrada:%d\n",strlen(entrada));
+	/*
+	while(k<strlen(entrada))
+	{
+		printf("K:%d\n",k);
+		printf(" [%d]:%d\n ",k,entrada[k]);
+		k=k+1;
+	}
+	*/
 	entrada[i]='\0';
 
 	while(j<strlen(entrada))
@@ -153,20 +162,133 @@ int main()
 		inicio:
 		memset(&resposta[0], 0, sizeof(resposta));
 		c=entrada[j];
+		if(c == 32)
+		{
+			while(entrada[j] == 32 && entrada[j+1] == 32)
+			{
+
+					j=j+1;
+					c=entrada[j];
+					if(entrada[j+2] == 10)
+					{
+
+						linha = linha+1;
+						j=j+3;
+
+
+					}
+			}
+		}
+		if(entrada[j] == 32)
+		{
+			j=j+1;
+			c=entrada[j];
+		}
+		if(entrada[j] == 10)
+		{
+			j=j+1;
+			linha=linha+1;
+			c=entrada[j];
+		}
+		if(entrada[j] ==0)
+			break;
+
+
 		identificador:
 
 		/*
 		 *
 		*/
-		if(isalpha(c) && c == 'e' && c == 101)
+
+		if(c == '{' && c == 123)
+		{
+			comentario:
+			if(entrada[j+1] !=  '}')
+			{
+				j=j+1;
+				goto comentario;
+			}
+
+			if(entrada[j+1] == '}' && entrada[j+2] == 10)
+			{
+				linha=linha+1;
+				j=j+3;
+				goto inicio;
+			}
+			if(entrada[j+1] == '}' && entrada[j+2] == 32)
+			{
+
+				j=j+3;
+				goto inicio;
+			}
+			if(entrada[j+1] == '}' && entrada[j+2] == 0)
+			{
+				j=j+3;
+				printf("Comentario");
+				break;
+			}
+			if(entrada[j+1] == '}' && isdigit(entrada[j+2] ) || isalpha(entrada[j+2]) || entrada[j+2] == '_' )
+			{
+				j=j+2;
+				goto inicio;
+
+			}
+		}
+
+
+		if(isdigit(c))
 		{
 
+			sprintf(numero, "%c", c);
+			strcat(resposta,numero);
+
+			numero:
+			memset(&numero[0], 0, sizeof(numero));
+			num = entrada[j+1];
+			if(isdigit(num))
+			{
+				sprintf(numero, "%c", num);
+				strcat(resposta,numero);
+				j=j+1;
+				goto numero;
+
+			}
+			printf("NUM:%d\n",num);
+			if(isalpha(num) || num == '_')
+			{
+				goto errolexico;
+				flag=1;
+			}
+			if(num == 0  )
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				break;
+
+			}
+			if(num == 10)
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				linha=linha+1;
+				j=j+2;
+				goto inicio;
+			}
+			if(num == 32)
+			{
+				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				j=j+2;
+				goto inicio;
+
+			}
+		}
+
+		if(isalpha(c) && c == 'e' && c == 101)
+	{
 			if(isspace(entrada[j+1]) || entrada[j+1] ==  32 || entrada[j+1] == 10 || entrada[j+1] == '\0')
 			{
 				strcat(resposta,"e");
-
 				//printf("%s",resposta);
 				fprintf(saida,"%s\t\t\t\tPalavra Reservada\t\t\t\t%d\n",resposta,linha);
+
 				if(entrada[j+1] == 10)
 					linha=linha+1;
 				j=j+2;
@@ -1547,6 +1669,10 @@ int main()
 			j=j+2;
 			goto inicio;
 		}
+		if(isdigit(entrada[j+1]) || isalpha(entrada[j+1])){
+			flag=1;
+			goto errolexico;
+		}
 		if(entrada[j+1] == '=' && entrada[j+1] == 61)
 		{
 			if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
@@ -1559,8 +1685,12 @@ int main()
 				goto inicio;
 
 			}
-
+			if(isdigit(entrada[j+2]) || isalpha(entrada[j+2])){
+				flag=1;
+				goto errolexico;
+			}
 		}
+
 		if(entrada[j+1] == '>' && entrada[j+1] == 62)
 		{
 			if(entrada[j+2] == 10 || entrada[j+2] == 32 || entrada[j+2] == '\0')
@@ -1573,10 +1703,14 @@ int main()
 				goto inicio;
 
 			}
+			if(isdigit(entrada[j+2]) || isalpha(entrada[j+2])){
+				flag=1;
+				goto errolexico;
+			}
 
 		}
 	}
-	//Erik - Funcao que verifica > , >= 
+	//Erik - Funcao que verifica > , >=
 	if(c == '>' && c == 62)
 	{
 		if(isspace(entrada[j+1]) || entrada[j+1] ==  32 || entrada[j+1] == 10 || entrada[j+1] == '\0')
@@ -1588,6 +1722,10 @@ int main()
 				linha=linha+1;
 			j=j+2;
 			goto inicio;
+		}
+		if(isdigit(entrada[j+1]) || isalpha(entrada[j+1])){
+			flag=1;
+			goto errolexico;
 		}
 		if(entrada[j+1] == '=' && entrada[j+1] == 61)
 		{
@@ -1601,15 +1739,30 @@ int main()
 				goto inicio;
 
 			}
+			if(isdigit(entrada[j+2]) || isalpha(entrada[j+2])){
+				flag=1;
+				goto errolexico;
+			}
 
 		}
 	}
-
 		if(entrada[j+1] == '\0')
-			break;
+		{
 
+			break;
+		}
 }
+
+
+
 //	printf("entrada[%d]:%d\n entrada[%d]:%d\n  entrada[%d]:%d\n  entrada[%d]:%d\n entrada[%d]:%d\n",0,entrada[0],1,entrada[1],2,entrada[2],3,entrada[3],4,entrada[4]);
+
+	if(flag==1)
+	{
+
+		errolexico:
+				printf("ERRO LEXICO - LINHA %d\n",linha);
+	}
 
 	fclose(abrir);
 	fclose(saida);

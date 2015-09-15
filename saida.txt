@@ -1,14 +1,6 @@
 TOKEN					TIPO						LINHA
+e					Palavra Reservada				1
+123					Numero 						1
 se					Palavra Reservada				1
 senao					Palavra Reservada				2
-entao					Palavra Reservada				3
-programa				Palavra Reservada				4
-procedimento				Palavra Reservada				4
-inteiro					Palavra Reservada				5
-inicio					Palavra Reservada				6
-fim					Palavra Reservada				7
-faca					Palavra Reservada				8
-funcao					Palavra Reservada				9
-falso					Palavra Reservada				10
-var					Palavra Reservada				11
-verdadeiro				Palavra Reservada				12
+123456					Numero 						3

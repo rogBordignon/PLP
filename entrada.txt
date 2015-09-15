@@ -1,4 +1,4 @@
-se
+{1234567890}e 123 se
 senao
 entao
 programa procedimento
@@ -12,3 +12,7 @@ var
 verdadeiro
 <
 <=
+<>
+>
+>=
+123456
