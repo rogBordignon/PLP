@@ -1,3 +1,18 @@
 {1234567890}e 123 se
 senao
+entao
+programa procedimento
+inteiro
+inicio
+fim
+faca
+funcao
+falso
+var
+verdadeiro
+<
+<=
+<>
+>
+>=
 123456
