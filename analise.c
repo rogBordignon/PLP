@@ -262,12 +262,14 @@ int main()
 			if(num == 0  )
 			{
 				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<Numero, %s>\n",resposta);
 				break;
 
 			}
 			if(num == 10)
 			{
 				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<Numero, %s>\n",resposta);
 				linha=linha+1;
 				j=j+2;
 				goto inicio;
@@ -275,6 +277,7 @@ int main()
 			if(num == 32)
 			{
 				fprintf(saida,"%s\t\t\t\t\tNumero \t\t\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<Numero, %s>\n",resposta);
 				j=j+2;
 				goto inicio;
 
@@ -1664,6 +1667,7 @@ int main()
 			strcat(resposta,"<");
 			//printf("%s",resposta);
 			fprintf(saida,"%s\t\t\t\tOperador Relacional Lógico\t\t\t\t%d\n",resposta,linha);
+			// fprintf(saida,"<OpRelLog, %s>\n",resposta);
 			if(entrada[j+1] == 10)
 				linha=linha+1;
 			j=j+2;
@@ -1679,6 +1683,7 @@ int main()
 			{
 				strcat(resposta,"=");
 				fprintf(saida,"%s\t\t\t\t\tOperador Relacional Logico\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<OpRelLog, %s>\n",resposta);
 				if(entrada[j+2] == 10)
 					linha=linha+1;
 				j = j+3;
@@ -1697,6 +1702,7 @@ int main()
 			{
 				strcat(resposta,">");
 				fprintf(saida,"%s\t\t\t\t\tOperador Relacional Logico\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<OpRelLog, %s>\n",resposta);
 				if(entrada[j+2] == 10)
 					linha=linha+1;
 				j = j+3;
@@ -1718,6 +1724,7 @@ int main()
 			strcat(resposta,">");
 			//printf("%s",resposta);
 			fprintf(saida,"%s\t\t\t\tOperador Relacional Lógico\t\t\t\t%d\n",resposta,linha);
+			// fprintf(saida,"<OpRelLog, %s>\n",resposta);
 			if(entrada[j+1] == 10)
 				linha=linha+1;
 			j=j+2;
@@ -1733,6 +1740,7 @@ int main()
 			{
 				strcat(resposta,"=");
 				fprintf(saida,"%s\t\t\t\t\tOperador Relacional Logico\t\t\t\t%d\n",resposta,linha);
+				// fprintf(saida,"<OpRelLog, %s>\n",resposta);
 				if(entrada[j+2] == 10)
 					linha=linha+1;
 				j = j+3;
