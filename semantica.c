@@ -11,7 +11,7 @@ int main()
     brir = fopen("entrada.txt","r");
 	saida = fopen("saida.txt","w");
     
-    //fscanf();
+    //fscanf(); E necessario conhecer o formato das linhas da analise sintatica para poder implantar a operacao de leitura.
     
     fclose(abrir);
 	fclose(saida);
