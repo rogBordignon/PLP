@@ -25,10 +25,12 @@ typedef struct an
 	Protótipo das Funções
 	- Análise Léxica
 	- Análise Sintática
+	- Análise Semântica
 */
 
 int analise_lexica(FILE *abrir,FILE *saida);
 void analise_sintatica(FILE * saida);
+void analise_semantica(FILE * saida);
 
 int main()
 {
@@ -71,7 +73,10 @@ void analise_semantica(FILE *saida)
 
 
 	entrada = malloc(sizeof(char)*2000);
-
+        /*
+	    Aqui eu leio todos os caracteres do arquivo.
+	    Técnica de buffering ,a mesma que foi utilizada na análise léxica.
+	*/
 	while((caracter=fgetc(saida))!=EOF)
 	{
 		entrada[i]=caracter;
@@ -79,7 +84,10 @@ void analise_semantica(FILE *saida)
 	}
         entrada[i]='\0';
     
-    
+    /*
+	Aqui todos os caracteres eu formo strings (representam os tokens, tipos e linhas)
+	e vou adicionando no vetor de structs.
+    */
     while(j<strlen(entrada))
     {
 		c=entrada[j];
@@ -129,8 +137,12 @@ void analise_semantica(FILE *saida)
             c = entrada[j];
             goto token;
         }
-		
-        if(c == 0)
+	
+	/*
+		Aqui a última posição do vetor de structs contém o "#"
+		para indicar que o vetorde structs terminou.
+	*/
+	if(c == 0)
         {
 
             strcpy(semantica[contadorToken].token,"#");
