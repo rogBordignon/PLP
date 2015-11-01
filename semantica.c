@@ -160,7 +160,7 @@ void analise_semantica(FILE *saida)
 	analisa:
 	if(sentinela == 0)
 	{
-		erro_sintatico:
+		erro_semantico:
         	printf("\n\nERRO SEMANTICO - LINHA:%s\n",semantica[percorre].linha);
     	}
     	
